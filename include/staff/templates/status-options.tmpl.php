@@ -10,7 +10,7 @@ $actions= array(
         'closed' => array(
             'icon'  => 'icon-ok-circle',
             'action' => 'close',
-            'href' => 'tickets.php'
+            'href' => ($ticket ? sprintf('tickets.php?id=%d', $ticket->getId()) : 'tickets.php')
             ),
         'open' => array(
             'icon'  => 'icon-undo',

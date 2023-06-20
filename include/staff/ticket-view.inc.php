@@ -108,7 +108,7 @@ if($ticket->isOverdue())
             // Transfer
             if ($role->hasPerm(Ticket::PERM_TRANSFER)) {?>
             <a class="action-button pull-right ticket-action" id="ticket-transfer" data-placement="bottom" data-toggle="tooltip" title="<?php echo __('Transfer'); ?>"
-                data-redirect="tickets.php"
+                data-redirect="<?php echo sprintf('tickets.php?id=%d', $id) ?>"
                 href="#tickets/<?php echo $ticket->getId(); ?>/transfer"><i class="icon-share"></i></a>
             <?php
             } ?>
@@ -124,7 +124,7 @@ if($ticket->isOverdue())
                 >
                 <i class="icon-caret-down pull-right"></i>
                 <a class="ticket-action" id="ticket-assign"
-                    data-redirect="tickets.php"
+                    data-redirect="<?php echo sprintf('tickets.php?id=%d', $id) ?>"
                     href="#tickets/<?php echo $ticket->getId(); ?>/assign"><i class="icon-user"></i></a>
             </span>
             <div id="action-dropdown-assign" class="action-dropdown anchor-right">
@@ -136,18 +136,17 @@ if($ticket->isOverdue())
                             || $dept->isMember($thisstaff))
                         ) { ?>
                  <li><a class="no-pjax ticket-action"
-                    data-redirect="tickets.php?id=<?php echo
-                    $ticket->getId(); ?>"
+                    data-redirect="<?php echo sprintf('tickets.php?id=%d', $id) ?>"
                     href="#tickets/<?php echo $ticket->getId(); ?>/claim"><i
                     class="icon-chevron-sign-down"></i> <?php echo __('Claim'); ?></a>
                 <?php
                 } ?>
                  <li><a class="no-pjax ticket-action"
-                    data-redirect="tickets.php"
+                    data-redirect="<?php echo sprintf('tickets.php?id=%d', $id) ?>"
                     href="#tickets/<?php echo $ticket->getId(); ?>/assign/agents"><i
                     class="icon-user"></i> <?php echo __('Agent'); ?></a>
                  <li><a class="no-pjax ticket-action"
-                    data-redirect="tickets.php"
+                    data-redirect="<?php echo sprintf('tickets.php?id=%d', $id) ?>"
                     href="#tickets/<?php echo $ticket->getId(); ?>/assign/teams"><i
                     class="icon-group"></i> <?php echo __('Team'); ?></a>
               </ul>
