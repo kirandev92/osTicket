@@ -443,7 +443,7 @@ print $response_form->getField('attachments')->render();
                     <?php
                     } ?>
                     <label><input type="radio" name="signature" value="dept"
-                        <?php echo ($info['signature']=='dept')?'checked="checked"':''; ?>> <?php echo sprintf(__('Department Signature (%s)'), __('if set')); ?></label>
+                        <?php echo ($info['signature']=='dept')?'checked="checked"':''; ?>> <?php echo sprintf(__('Product Signature (%s)'), __('if set')); ?></label>
                 </td>
              </tr>
             </table>

@@ -1081,7 +1081,7 @@ if ($errors['err'] && isset($_POST['a'])) {
                     if($dept && $dept->canAppendSignature()) { ?>
                     <label><input type="radio" name="signature" value="dept"
                         <?php echo ($info['signature']=='dept')?'checked="checked"':''; ?>>
-                        <?php echo sprintf(__('Department Signature (%s)'), Format::htmlchars($dept->getName())); ?></label>
+                        <?php echo sprintf(__('Product Signature (%s)'), Format::htmlchars($dept->getName())); ?></label>
                     <?php
                     } ?>
                 </td>

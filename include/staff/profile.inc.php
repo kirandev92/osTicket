@@ -315,8 +315,8 @@ if (($bks=Staff2FABackend::allRegistered())) {
                 <select name="default_signature_type">
                   <option value="none" selected="selected">&mdash; <?php echo __('None');?> &mdash;</option>
                   <?php
-                   $options=array('mine'=>__('My Signature'),'dept'=>sprintf(__('Department Signature (%s)'),
-                       __('if set' /* This is used in 'Department Signature (>if set<)' */)));
+                   $options=array('mine'=>__('My Signature'),'dept'=>sprintf(__('Product Signature (%s)'),
+                       __('if set' /* This is used in 'Product Signature (>if set<)' */)));
                   foreach($options as $k=>$v) {
                       echo sprintf('<option value="%s" %s>%s</option>',
                                 $k,($staff->default_signature_type==$k)?'selected="selected"':'',$v);
