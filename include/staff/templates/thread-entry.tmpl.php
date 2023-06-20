@@ -71,7 +71,8 @@ if ($user && $cfg->isAvatarsEnabled())
         </span>
         </div>
 <?php
-        echo sprintf(__('<b>%s</b> posted %s'), $name,
+        echo sprintf(__('<b>%s</b> %s %s'), $name,
+            $entry->type === 'N' ? 'added a private note' : 'posted',
             sprintf('<a name="entry-%d" href="#entry-%1$s"><time %s
                 datetime="%s" data-toggle="tooltip" title="%s">%s</time></a>',
                 $entry->id,
