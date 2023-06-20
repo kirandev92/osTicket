@@ -38,7 +38,7 @@ if(isset($_REQUEST['id']) || isset($_REQUEST['number'])) {
     elseif($_REQUEST['number'] && !($ticket=Ticket::lookup(array('number' => $_REQUEST['number']))))
          $errors['err']=sprintf(__('%s: Unknown or invalid number.'), __('ticket'));
      elseif(!$ticket || !$ticket->checkStaffPerm($thisstaff)) {
-         $errors['err']=__('Access denied. Contact admin if you believe this is in error');
+         $errors['err']=__('Access denied. This may be because you are not a member of the right department, you may not own the ticket anymore (due to transfer or reassignment) or you may not have sufficient privileges. Contact admin if you believe this is in error.');
          $ticket=null; //Clear ticket obj.
      }
 }
