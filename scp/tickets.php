@@ -162,7 +162,7 @@ if($_POST && !$errors):
         //More coffee please.
         $errors=array();
         $lock = $ticket->getLock(); //Ticket lock if any
-        $role = $ticket->getRole($thisstaff);
+        $role = $thisstaff->getRole($ticket->getDeptId());
         $dept = $ticket->getDept();
         $isManager = $dept->isManager($thisstaff); //Check if Agent is Manager
         switch(strtolower($_POST['a'])):

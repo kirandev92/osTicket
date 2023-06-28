@@ -1,7 +1,7 @@
 <?php
 global $thisstaff;
 
-$role = $ticket->getRole($thisstaff);
+$role = $thisstaff->getRole($ticket->getDeptId());
 
 $tasks = Task::objects()
     ->select_related('dept', 'staff', 'team')

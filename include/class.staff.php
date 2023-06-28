@@ -584,24 +584,12 @@ implements AuthenticatedUser, EmailContact, TemplateVariable, Searchable {
         return $this->_roles;
     }
 
-    function getRole($dept=null, $assigned=false) {
-
-        if (is_null($dept))
-            return $this->role;
-
-       if (is_numeric($dept))
-          $deptId = $dept;
-       elseif($dept instanceof Dept)
-          $deptId = $dept->getId();
-       else
-          return null;
-
+    function getRole($dept=null) {
+        $deptId = is_object($dept) ? $dept->getId() : $dept;
         $roles = $this->getRoles();
         if (isset($roles[$deptId]))
             return $roles[$deptId];
-
-        // Default to primary role.
-        if ($assigned && $this->usePrimaryRoleOnAssignment())
+        if ($this->usePrimaryRoleOnAssignment())
             return $this->role;
 
         // Ticket Create & View only access
@@ -676,13 +664,8 @@ implements AuthenticatedUser, EmailContact, TemplateVariable, Searchable {
         return ($teamId && in_array($teamId, $this->getTeams()));
     }
 
-    function canAccessDept($dept) {
-
-        if (!$dept instanceof Dept)
-            return false;
-
-        return (!$this->isAccessLimited()
-                && in_array($dept->getId(), $this->getDepts()));
+    function canAccessDept($deptId) {
+        return ($deptId && in_array($deptId, $this->getDepts()) && !$this->isAccessLimited());
     }
 
     function getTeams() {

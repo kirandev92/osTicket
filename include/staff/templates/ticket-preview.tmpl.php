@@ -6,7 +6,7 @@
 
 $staff=$ticket->getStaff();
 $lock=$ticket->getLock();
-$role=$ticket->getRole($thisstaff);
+$role=$thisstaff->getRole($ticket->getDeptId());
 $error=$msg=$warn=null;
 $thread = $ticket->getThread();
 

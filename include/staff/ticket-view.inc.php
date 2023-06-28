@@ -13,7 +13,7 @@ Signal::send('object.view', $ticket, $type);
 
 //Get the goodies.
 $dept     = $ticket->getDept();  //Dept
-$role     = $ticket->getRole($thisstaff);
+$role  = $thisstaff->getRole($dept, $ticket->isAssigned($thisstaff));
 $staff    = $ticket->getStaff(); //Assigned or closed by..
 $user     = $ticket->getOwner(); //Ticket User (EndUser)
 $team     = $ticket->getTeam();  //Assigned team.
@@ -232,10 +232,8 @@ if($ticket->isOverdue())
                     return false"
                     ><i class="icon-paste"></i> <?php echo __('Manage Forms'); ?></a></li>
                 <?php
-                }
-
-                if ($role->hasPerm(Ticket::PERM_REPLY) && $thread && $ticket->getId() == $thread->getObjectId()) {
-                    ?>
+                } ?>
+             
                 <li>
 
                     <?php
@@ -247,12 +245,8 @@ if($ticket->isOverdue())
                             $recipients);
                    ?>
                 </li>
-                <?php
-                } ?>
 
-
-<?php           if ($thisstaff->hasPerm(Email::PERM_BANLIST)
-                    && $role->hasPerm(Ticket::PERM_REPLY)) {
+<?php           if ($thisstaff->hasPerm(Email::PERM_BANLIST)) {
                      if(!$emailBanned) {?>
                         <li><a class="confirm-action" id="ticket-banemail"
                             href="#banemail"><i class="icon-ban-circle"></i> <?php echo sprintf(

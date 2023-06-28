@@ -44,7 +44,7 @@ if($_POST && !$errors):
     if ($task) {
         //More coffee please.
         $errors=array();
-        $role = $thisstaff->getRole($task->getDept());
+        $role = $thisstaff->getRole($task->getDeptId());
         switch(strtolower($_POST['a'])):
         case 'postnote': /* Post Internal Note */
             $vars = $_POST;

@@ -1,10 +1,5 @@
 <?php
 global $thisstaff, $ticket;
-
-$role = $ticket ? $ticket->getRole($thisstaff) : $thisstaff->getRole();
-if ($role && !$role->hasPerm(Ticket::PERM_CLOSE))
-    return;
-
 // Map states to actions
 $actions= array(
         'closed' => array(
@@ -19,8 +14,9 @@ $actions= array(
         );
 
 $states = array('open');
-if (!$ticket || $ticket->isCloseable())
-    $states[] = 'closed';
+if ($thisstaff->getRole($ticket ? $ticket->getDeptId() : null)->hasPerm(Ticket::PERM_CLOSE)
+        && (!$ticket || !Ticket::getMissingRequiredFields($ticket)))
+    $states = array_merge($states, array('closed'));
 
 $statusId = $ticket ? $ticket->getStatusId() : 0;
 $nextStatuses = array();

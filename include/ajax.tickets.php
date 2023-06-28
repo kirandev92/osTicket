@@ -1364,7 +1364,7 @@ class TicketsAjaxAPI extends AjaxController {
                 || !$ticket->checkStaffPerm($thisstaff))
             Http::response(404, 'Unknown ticket #');
 
-        $role = $ticket->getRole($thisstaff);
+        $role = $thisstaff->getRole($ticket->getDeptId());
 
         $info = array();
         $state = null;
@@ -1417,7 +1417,7 @@ class TicketsAjaxAPI extends AjaxController {
         elseif ($status->getId() == $ticket->getStatusId())
             $errors['err'] = sprintf(__('Ticket already set to %s status'),
                     __($status->getName()));
-        elseif (($role = $ticket->getRole($thisstaff))) {
+        elseif (($role = $thisstaff->getRole($ticket->getDeptId()))) {
             // Make sure the agent has permission to set the status
             switch(mb_strtolower($status->getState())) {
                 case 'open':
