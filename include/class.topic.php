@@ -140,7 +140,7 @@ implements TemplateVariable, Searchable {
 
     function getDept() {
 
-        return $this->getDeptId() ? Dept::lookup($this->getDeptId()) : null;
+        return $this->dept;
     }
 
     function getSLAId() {
