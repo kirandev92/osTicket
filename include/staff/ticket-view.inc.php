@@ -13,6 +13,7 @@ Signal::send('object.view', $ticket, $type);
 
 //Get the goodies.
 $dept     = $ticket->getDept();  //Dept
+$topic_dept = $ticket->getTopic()->dept;
 $role  = $thisstaff->getRole($dept, $ticket->isAssigned($thisstaff));
 $staff    = $ticket->getStaff(); //Assigned or closed by..
 $user     = $ticket->getOwner(); //Ticket User (EndUser)
@@ -1027,8 +1028,8 @@ if ($errors['err'] && isset($_POST['a'])) {
                     $signature = '';
                     switch ($thisstaff->getDefaultSignatureType()) {
                     case 'dept':
-                        if ($dept && $dept->canAppendSignature())
-                           $signature = $dept->getSignature();
+                        if ($topic_dept && $topic_dept->canAppendSignature())
+                           $signature = $topic_dept->getSignature();
                        break;
                     case 'mine':
                         $signature = $thisstaff->getSignature();
@@ -1037,7 +1038,7 @@ if ($errors['err'] && isset($_POST['a'])) {
                     <input type="hidden" name="draft_id" value=""/>
                     <br/>
                     <textarea name="response" id="response" cols="50"
-                        data-signature-field="signature" data-dept-id="<?php echo $dept->getId(); ?>"
+                        data-signature-field="signature" data-dept-id="<?php echo $topic_dept->getId(); ?>"
                         data-signature="<?php
                             echo Format::htmlchars(Format::viewableImages($signature)); ?>"
                         placeholder="<?php echo __(
@@ -1072,10 +1073,10 @@ if ($errors['err'] && isset($_POST['a'])) {
                     <?php
                     } ?>
                     <?php
-                    if($dept && $dept->canAppendSignature()) { ?>
+                    if($topic_dept && $topic_dept->canAppendSignature()) { ?>
                     <label><input type="radio" name="signature" value="dept"
                         <?php echo ($info['signature']=='dept')?'checked="checked"':''; ?>>
-                        <?php echo sprintf(__('Product Signature (%s)'), Format::htmlchars($dept->getName())); ?></label>
+                        <?php echo sprintf(__('Product Signature (%s)'), Format::htmlchars($topic_dept->getName())); ?></label>
                     <?php
                     } ?>
                 </td>

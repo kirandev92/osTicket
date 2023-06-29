@@ -1654,7 +1654,7 @@ implements RestrictedAccess, Threadable, Searchable {
         if(!$cfg
             || !($dept=$this->getDept())
             || !($tpl = $dept->getTemplate())
-            || !($outgoingemail=$this->getTopic()->dept->getAutoRespEmail())
+            || !($outgoingemail=$topic_dept->getAutoRespEmail())
         ) {
             return false;  //bail out...missing stuff.
         }
@@ -1684,7 +1684,7 @@ implements RestrictedAccess, Threadable, Searchable {
                 $msg->asArray(),
                 array('message' => $message,
                       'recipient' => $this->getOwner(),
-                      'signature' => ($dept && $dept->isPublic())?$dept->getSignature():''
+                      'signature' => ($topic_dept && $topic_dept->isPublic()) ? $topic_dept->getSignature() : ''
                 )
             );
             $outgoingemail->sendAutoReply($this->getOwner(), $msg['subj'], $msg['body'],
@@ -1776,7 +1776,7 @@ implements RestrictedAccess, Threadable, Searchable {
         ) {
             $msg = $this->replaceVars(
                 $msg->asArray(),
-                array('signature' => ($dept && $dept->isPublic())?$dept->getSignature():'')
+                array('signature' => ($topic_dept && $topic_dept->isPublic()) ? $topic_dept->getSignature() : '')
             );
 
             $email->sendAutoReply($this->getOwner(), $msg['subj'], $msg['body']);
@@ -1934,10 +1934,11 @@ implements RestrictedAccess, Threadable, Searchable {
             && ($tpl=$dept->getTemplate())
             && ($msg=$tpl->getNewMessageAutorepMsgTemplate())
         ) {
+            $topic_dept = $this->getTopic()->dept;
             $msg = $this->replaceVars($msg->asArray(),
                 array(
                     'recipient' => $user,
-                    'signature' => ($dept && $dept->isPublic())?$dept->getSignature():''
+                    'signature' => ($topic_dept && $topic_dept->isPublic()) ? $topic_dept->getSignature() : ''
                 )
             );
             $options = array('thread' => $message);
@@ -3308,8 +3309,8 @@ implements RestrictedAccess, Threadable, Searchable {
             && ($tpl = $dept->getTemplate())
             && ($msg=$tpl->getAutoReplyMsgTemplate())
         ) {
-            if ($dept && $dept->isPublic())
-                $signature=$dept->getSignature();
+            if ($topic_dept = $this->getTopic()->dept && $topic_dept->isPublic())
+                $signature = $topic_dept->getSignature();
             else
                 $signature='';
 
@@ -3397,10 +3398,11 @@ implements RestrictedAccess, Threadable, Searchable {
 
         $options = array('thread'=>$response);
         $signature = $from_name = '';
+        $topic_dept = $this->getTopic()->dept;
         if ($thisstaff && $vars['signature']=='mine')
             $signature=$thisstaff->getSignature();
-        elseif ($vars['signature']=='dept' && $dept->isPublic())
-            $signature=$dept->getSignature();
+        elseif ($vars['signature']=='dept' && $topic_dept->isPublic())
+            $signature = $topic_dept->getSignature();
 
         if ($thisstaff && ($type=$thisstaff->getReplyFromNameType())) {
             switch ($type) {
@@ -4689,10 +4691,11 @@ implements RestrictedAccess, Threadable, Searchable {
                }
            }
 
+           $topic_dept = $ticket->getTopic()->dept; 
             if ($vars['signature']=='mine')
                 $signature=$thisstaff->getSignature();
-            elseif ($vars['signature']=='dept' && $dept && $dept->isPublic())
-                $signature=$dept->getSignature();
+            elseif ($vars['signature']=='dept' && $topic_dept && $topic_dept->isPublic())
+                $signature = $topic_dept->getSignature();
             else
                 $signature='';
 

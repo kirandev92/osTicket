@@ -26,10 +26,13 @@
     <?php
     } ?>
     <?php
+    if ($T = $this->entry->getThread()->getObject()) {
+        $dept = $T instanceof Ticket ? $T->getTopic()->dept : $T->getDept();
+    }
     if ($dept && $dept->canAppendSignature()) { ?>
     <label><input type="radio" name="signature" value="dept"
         <?php echo ($info['signature']=='dept')?'checked="checked"':''; ?>>
-        <?php echo sprintf(__('Product Signature (%s)'), Format::htmlchars($dept->getName())); ?></label>
+        <?php echo sprintf(__('%s Signature (%s)'), $T instanceof Ticket ? 'Product' : 'Department', Format::htmlchars($dept->getName())); ?></label>
     <?php
     } ?>
 </div>
@@ -42,8 +45,9 @@
             value="<?php echo __('Cancel'); ?>">
     </span>
     <span class="buttons pull-right">
-        <input type="submit" name="save"
-            value="<?php echo __('Resend'); ?>">
+        <button type="submit" name="commit" value="resend" class="button">
+            <?php echo __('Resend'); ?>
+        </button>
     </span>
 </p>
 

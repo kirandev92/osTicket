@@ -13,7 +13,7 @@
     $signature_type = $poster->getDefaultSignatureType();
     $signature = '';
     if (($T = $this->entry->getThread()->getObject()))
-        $dept = $T->getDept();
+        $dept = $T instanceof Ticket ? $T->getTopic()->dept : $T->getDept();
 
     switch ($poster->getDefaultSignatureType()) {
     case 'dept':

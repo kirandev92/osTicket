@@ -357,14 +357,15 @@ class TEA_EditAndResendThreadEntry extends TEA_EditThreadEntry {
 
         $vars = $_POST;
         $dept = $object->getDept();
+        $topic_dept = $object instanceof Ticket ? $object->getTopic()->dept : $dept;
         $poster = $response->getStaff();
 
         if ($thisstaff && $vars['signature'] == 'mine')
             $signature = $thisstaff->getSignature();
         elseif ($poster && $vars['signature'] == 'theirs')
             $signature = $poster->getSignature();
-        elseif ($vars['signature'] == 'dept' && $dept && $dept->isPublic())
-            $signature = $dept->getSignature();
+        elseif ($vars['signature'] == 'dept' && $topic_dept && $topic_dept->isPublic())
+            $signature = $topic_dept->getSignature();
         else
             $signature = '';
 
