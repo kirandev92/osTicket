@@ -1654,7 +1654,7 @@ implements RestrictedAccess, Threadable, Searchable {
         if(!$cfg
             || !($dept=$this->getDept())
             || !($tpl = $dept->getTemplate())
-            || !($email=$dept->getAutoRespEmail())
+            || !($outgoingemail=$this->getTopic()->dept->getAutoRespEmail())
         ) {
             return false;  //bail out...missing stuff.
         }
@@ -1687,7 +1687,7 @@ implements RestrictedAccess, Threadable, Searchable {
                       'signature' => ($dept && $dept->isPublic())?$dept->getSignature():''
                 )
             );
-            $email->sendAutoReply($this->getOwner(), $msg['subj'], $msg['body'],
+            $outgoingemail->sendAutoReply($this->getOwner(), $msg['subj'], $msg['body'],
                 null, $options);
         }
 
@@ -3304,7 +3304,7 @@ implements RestrictedAccess, Threadable, Searchable {
 
         $dept = $this->getDept();
 
-        if (($email=$dept->getEmail())
+        if (($outgoingemail = $this->getTopic()->dept->getEmail())
             && ($tpl = $dept->getTemplate())
             && ($msg=$tpl->getAutoReplyMsgTemplate())
         ) {
@@ -3333,7 +3333,7 @@ implements RestrictedAccess, Threadable, Searchable {
                         );
             }
 
-            $email->sendAutoReply($this->getOwner(), $msg['subj'], $msg['body'], $attachments,
+            $outgoingemail->sendAutoReply($this->getOwner(), $msg['subj'], $msg['body'], $attachments,
                 $options);
         }
         return $response;
