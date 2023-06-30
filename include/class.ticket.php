@@ -1650,7 +1650,7 @@ implements RestrictedAccess, Threadable, Searchable {
             return true; //No alerts to send.
 
         /* ------ SEND OUT NEW TICKET AUTORESP && ALERTS ----------*/
-
+        $topic_dept = $this->getTopic()->dept;
         if(!$cfg
             || !($dept=$this->getDept())
             || !($tpl = $dept->getTemplate())
