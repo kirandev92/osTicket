@@ -1731,7 +1731,7 @@ implements RestrictedAccess, Threadable, Searchable {
 
                 foreach ($recipients as $k=>$staff) {
                     if (!is_object($staff)
-                        || !$staff->isAvailable()
+                        || (!$staff->isAvailable() && !$dept->isManager($staff))
                         || in_array($staff->getEmail(), $sentlist)
                     ) {
                         continue;
@@ -2016,7 +2016,7 @@ implements RestrictedAccess, Threadable, Searchable {
         foreach ($recipients as $k=>$staff) {
             if (!is_object($staff)
                 // Don't bother vacationing staff.
-                || !$staff->isAvailable()
+                || (!$staff->isAvailable() && !($dept && $dept->isManager($staff)))
                 // No need to alert the poster!
                 || $staffId == $staff->getId()
                 // No duplicates.
@@ -2163,7 +2163,7 @@ implements RestrictedAccess, Threadable, Searchable {
             $sentlist = array();
             foreach ($recipients as $k=>$staff) {
                 if (!is_object($staff)
-                    || !$staff->isAvailable()
+                    || (!$staff->isAvailable() && !($dept && $dept->isManager($staff)))
                     || in_array($staff->getEmail(), $sentlist)
                 ) {
                     continue;
@@ -2757,7 +2757,7 @@ implements RestrictedAccess, Threadable, Searchable {
             }
             foreach ($recipients as $k=>$staff) {
                 if (!is_object($staff)
-                    || !$staff->isAvailable()
+                    || (!$staff->isAvailable() && !($dept && $dept->isManager($staff)))
                     || in_array($staff->getEmail(), $sentlist)
                 ) {
                     continue;
@@ -3252,7 +3252,7 @@ implements RestrictedAccess, Threadable, Searchable {
             $sentlist = array(); //I know it sucks...but..it works.
             foreach ($recipients as $k=>$staff) {
                 if (!$staff || !$staff->getEmail()
-                    || !$staff->isAvailable()
+                    || (!$staff->isAvailable() && !($dept && $dept->isManager($staff)))
                     || in_array($staff->getEmail(), $sentlist)
                 ) {
                     continue;

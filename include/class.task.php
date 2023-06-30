@@ -956,7 +956,7 @@ class Task extends TaskModel implements RestrictedAccess, Threadable {
 
             foreach ($recipients as $k=>$staff) {
                 if (!is_object($staff)
-                    || !$staff->isAvailable()
+                    || (!$staff->isAvailable() && !$dept->isManager($staff))
                     || in_array($staff->getEmail(), $sentlist)
                 ) {
                     continue;
@@ -1238,7 +1238,7 @@ class Task extends TaskModel implements RestrictedAccess, Threadable {
         foreach ($recipients as $k=>$staff) {
             if (!is_object($staff)
                 // Don't bother vacationing staff.
-                || !$staff->isAvailable()
+                || (!$staff->isAvailable() && !($dept && $dept->isManager($staff)))
                 // No need to alert the poster!
                 || $staffId == $staff->getId()
                 // No duplicates.
